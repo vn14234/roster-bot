@@ -50,7 +50,7 @@ bot.on("message", async (message) => {
 		var reply = message.reply("posting roster...")
 			.then(msg => {
 				msg.delete({
-					timeout: 10000
+					timeout: 20000
 				})
 			})
 			.catch(console.log("failed to reply..."))
