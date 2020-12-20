@@ -7,8 +7,14 @@ const Discord = require("discord.js")
 
 const bot = new Discord.Client()
 
-var args = process.argv.slice(2);
-token = args[0]
+var token = "UNDEFINED"
+
+try {
+  token = fs.readFileSync('./bot.token', 'utf8')
+} catch (err) {
+  console.error(err)
+  exit(1)
+}
 
 bot.on("ready", () => {
 	console.log("bot is ready...");
