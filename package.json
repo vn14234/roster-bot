@@ -4,6 +4,7 @@
   "description": "",
   "main": "roster-bot.js",
   "scripts": {
+    "start": "node roster-bot.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -14,6 +15,10 @@
   "license": "SEE LICENSE IN LICENSE",
   "bugs": {
     "url": "https://github.com/vn14234/roster-bot/issues"
+  },
+  "engines": {
+    "node": "14.x",
+    "npm": "*"
   },
   "homepage": "https://github.com/vn14234/roster-bot#readme",
   "dependencies": {
