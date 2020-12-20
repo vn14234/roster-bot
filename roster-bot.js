@@ -7,13 +7,12 @@ const Discord = require("discord.js")
 
 const bot = new Discord.Client()
 
-var token = "UNDEFINED"
+var token = undefined
 
 try {
   token = fs.readFileSync('./bot.token', 'utf8')
 } catch (err) {
-  console.error(err)
-  exit(1)
+  console.log("failed to read token from bot.token")
 }
 
 bot.on("ready", () => {
@@ -107,4 +106,26 @@ bot.on("message", async (message) => {
 	}
 })
 
-bot.login(token)
+try
+{
+	if(token !== undefined)
+	{
+		console.log("Using token from bot.token: "+ token)
+		bot.login(token)	
+	}
+	else
+	{
+		if(process.env.DISCORD_TOKEN === undefined)
+		{
+			throw "DISCORD_TOKEN is undefined"
+		}
+		console.log("Using token from DISCORD_TOKEN: "+ process.env.DISCORD_TOKEN)
+		bot.login()	
+	}	
+}
+catch(err)
+{
+	console.log("Failed to start: " + err)
+	process.exit(1)
+}
+
