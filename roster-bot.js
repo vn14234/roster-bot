@@ -39,7 +39,7 @@ function deleteFile(file) {
 bot.on("message", async (message) => {
 	if (message.content === "*update") {
 
-		if (!message.member.roles.cache.some(role => role.name === 'BWL-Recruiter')) {
+		if (!message.member.roles.cache.some(role => role.name === 'Recruiter')) {
 			console.log("*update... => rejected")
 			return
 		}
@@ -53,7 +53,7 @@ bot.on("message", async (message) => {
 					timeout: 20000
 				})
 			})
-			.catch(console.log("failed to reply..."))
+			.catch()
 
 		deleteFile('sheet.png')
 		deleteFile('cropped_sheet.png')
@@ -96,7 +96,6 @@ bot.on("message", async (message) => {
 				],
 				function(err, result) {
 					if (err) throw err;
-					console.log(result);
 				}
 			);
 		} catch (err) {
