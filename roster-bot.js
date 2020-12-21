@@ -83,6 +83,7 @@ bot.on("message", async (message) => {
 				})
 			})
 			.catch()
+			return
 		}
 
 		try {
