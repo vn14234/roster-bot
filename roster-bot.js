@@ -76,8 +76,13 @@ bot.on("message", async (message) => {
 
 		if(url === undefined)
 		{
-			console.log("unhandled channel name: " + channel_name)
-			process.exit(1)
+			var reply = message.reply("unknown channel '"+channel_name+"', please write '*update' in a bwl or aq channel.")
+			.then(msg => {
+				msg.delete({
+					timeout: 10000
+				})
+			})
+			.catch()
 		}
 
 		try {
