@@ -44,6 +44,8 @@ bot.on("message", async (message) => {
 			return
 		}
 
+		if
+
 		console.log("*update... => " + message.author.username + "[" + message.author.tag + "]@(" + message.guild.name + ")")
 
 		message.delete()
@@ -58,7 +60,27 @@ bot.on("message", async (message) => {
 		deleteFile('sheet.png')
 		deleteFile('cropped_sheet.png')
 
-		var url = 'https://docs.google.com/spreadsheets/d/1yEnxSwM1IKEnQjJaYM09U8rBDXNyFJ9HMaRL4qMCDZI'
+		
+
+		var url_bwl = 'https://docs.google.com/spreadsheets/d/1yEnxSwM1IKEnQjJaYM09U8rBDXNyFJ9HMaRL4qMCDZI'
+		var url_aq = 'https://docs.google.com/spreadsheets/d/1frRIS1I9n7SVnvRLNbEH9fQSvdICSqMWnsY1dpwRIs8'
+		var url = undefined
+
+		var channel_name = message.channel.name;
+		if(channel_name.toLowerCase().includes("bwl"))
+		{
+			url = url_bwl
+		}
+		else if(channel_name.toLowerCase().includes("aq"))
+		{
+			url = url_aq
+		}
+
+		if(url === undefined)
+		{
+			console.log("unhandled channel name: " + channel_name)
+			process.exit(1)
+		}
 
 		try {
 			waterfall(
