@@ -37,54 +37,73 @@ function deleteFile(file) {
 
 // Listen to the message event
 bot.on("message", async (message) => {
-	if (message.content === "*update") {
+	commands = message.content.split(" ")
+	if(commands.length == 0)
+		return
+
+	if (commands[0] === "*update") {
 
 		if (!message.member.roles.cache.some(role => role.name === 'Recruiter')) {
 			console.log("*update... => rejected")
 			return
 		}
 
+		message.delete()
+
 		console.log("*update... => " + message.author.username + "[" + message.author.tag + "]@(" + message.guild.name + ")")
 
-		message.delete()
-		var reply = message.reply("posting roster...")
+		deleteFile('sheet.png')
+		deleteFile('cropped_sheet.png')
+	
+		var url_bwl = 'https://docs.google.com/spreadsheets/d/1yEnxSwM1IKEnQjJaYM09U8rBDXNyFJ9HMaRL4qMCDZI'
+		var url_aq = 'https://docs.google.com/spreadsheets/d/1frRIS1I9n7SVnvRLNbEH9fQSvdICSqMWnsY1dpwRIs8'
+		var url = undefined
+
+
+		var channel_name = message.channel.name;
+		if(commands.length == 2)
+		{
+			if(commands[1] === "aq")
+			{
+				url = url_aq
+				which_sheet = "aq"
+			}
+			else if(commands[1] === "bwl")
+			{
+				url = url_bwl
+				which_sheet = "bwl"
+			}
+		}
+		else if(channel_name.toLowerCase().includes("bwl"))
+		{
+			url = url_bwl
+			which_sheet = "bwl"
+		}
+		else if(channel_name.toLowerCase().includes("aq"))
+		{
+			url = url_aq
+			which_sheet = "aq"
+		}
+
+		if(url === undefined)
+		{			
+			var reply = message.reply("Unknown channel '"+channel_name+"'. Please try ```update aq``` or ```update bwl```")
 			.then(msg => {
 				msg.delete({
 					timeout: 20000
 				})
 			})
 			.catch()
-
-		deleteFile('sheet.png')
-		deleteFile('cropped_sheet.png')
-
-		
-
-		var url_bwl = 'https://docs.google.com/spreadsheets/d/1yEnxSwM1IKEnQjJaYM09U8rBDXNyFJ9HMaRL4qMCDZI'
-		var url_aq = 'https://docs.google.com/spreadsheets/d/1frRIS1I9n7SVnvRLNbEH9fQSvdICSqMWnsY1dpwRIs8'
-		var url = undefined
-
-		var channel_name = message.channel.name;
-		if(channel_name.toLowerCase().includes("bwl"))
-		{
-			url = url_bwl
-		}
-		else if(channel_name.toLowerCase().includes("aq"))
-		{
-			url = url_aq
-		}
-
-		if(url === undefined)
-		{
-			var reply = message.reply("unknown channel '"+channel_name+"', please write '*update' in a bwl or aq channel.")
-			.then(msg => {
-				msg.delete({
-					timeout: 10000
-				})
-			})
-			.catch()
 			return
 		}
+
+		var reply = message.reply("posting roster for **"+which_sheet.toUpperCase()+"**...")
+		.then(msg => {
+			msg.delete({
+				timeout: 20000
+			})
+		})
+		.catch()
 
 		try {
 			waterfall(
