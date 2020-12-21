@@ -10,7 +10,7 @@ const bot = new Discord.Client()
 var token = undefined
 
 try {
-  token = fs.readFileSync('./bot.token', 'utf8')
+  token = fs.readFileSync('./discord.token', 'utf8')
 } catch (err) {
   console.log("failed to read token from bot.token")
 }
@@ -43,8 +43,6 @@ bot.on("message", async (message) => {
 			console.log("*update... => rejected")
 			return
 		}
-
-		if
 
 		console.log("*update... => " + message.author.username + "[" + message.author.tag + "]@(" + message.guild.name + ")")
 
